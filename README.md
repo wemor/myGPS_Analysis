@@ -1,1 +1,1 @@
-# my-GPS-Analysis
+# myGPS_Analysis
