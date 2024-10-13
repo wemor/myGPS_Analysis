@@ -24,21 +24,21 @@ def calculate_velocity(points):
     for i in range(1, len(points)):
         point1 = points[i-1]
         point2 = points[i]
-        
+
         # Calculate distance in meters
         coords_1 = (point1.latitude, point1.longitude)
         coords_2 = (point2.latitude, point2.longitude)
         distance = geodesic(coords_1, coords_2).meters
-        
+
         # Calculate time difference in seconds
         time_diff = (point2.time - point1.time).total_seconds()
-        
+
         # Calculate velocity in m/s
         if time_diff > 0:
             velocity = distance / time_diff
             velocities.append(velocity)
             times.append((point2.time - points[0].time).total_seconds() / 60)  # Time in minutes since start
-    
+
     return np.array(times), np.array(velocities)
 
 # Function to calculate climb rate
@@ -48,19 +48,19 @@ def calculate_climb_rate(points):
     for i in range(1, len(points)):
         point1 = points[i-1]
         point2 = points[i]
-        
+
         # Calculate altitude difference in meters
         altitude_diff = point2.elevation - point1.elevation
-        
+
         # Calculate time difference in seconds
         time_diff = (point2.time - point1.time).total_seconds()
-        
+
         # Calculate climb rate in m/s
         if time_diff > 0:
             climb_rate = altitude_diff / time_diff
             climb_rates.append(climb_rate)
             times.append((point2.time - points[0].time).total_seconds() / 60)  # Time in minutes since start
-    
+
     return np.array(times), np.array(climb_rates)
 
 # Function to smooth data using a moving average
@@ -68,7 +68,7 @@ def smooth_data(data, window_size):
     return np.convolve(data, np.ones(window_size) / window_size, mode='valid')
 
 # Open the GPX file
-FileName = "C:/Users/wmore/OneDrive/Engineering/06-Prog_Eng/python/PycharmProjects/GPS_Analysis/Mountainbiking-Stans.gpx"
+FileName = "C:/Users/wmore/OneDrive/Engineering/06-Prog_Eng/python/myGPS_Analysis/myGPS_Data/Mountainbiking-Stans.gpx"
 with open(FileName, 'r') as gpx_file:
     gpx = gpxpy.parse(gpx_file)
 
